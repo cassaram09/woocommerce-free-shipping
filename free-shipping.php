@@ -1,9 +1,9 @@
 <?php
  
 /**
- * Plugin Name: WooCommerce Free Shipping
+ * Plugin Name: WooCommerce Individual Product Free Shipping
  * Plugin URI: github.com/cassaram09/woocommerce-free-shipping
- * Description: Custom Free Shipping Method for WooCommerce
+ * Description: Free Shipping for Individual Products for WooCommerce
  * Version: 1.0.0
  * Author: Matt Cassara
  * Author URI: http://mattcassara.com
@@ -22,9 +22,9 @@ if ( ! defined( 'WPINC' ) ) {
  */
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
  
-    function woocommerce_free_shipping_method() {
-        if ( ! class_exists( 'WooCommerce_Free_Shipping_Method' ) ) {
-            class WooCommerce_Free_Shipping_Method extends WC_Shipping_Method {
+    function woocommerce_individual_product_free_shipping_method() {
+        if ( ! class_exists( 'WooCommerce_Individual_Product_Free_Shipping_Method' ) ) {
+            class WooCommerce_Individual_Product_Free_Shipping_Method extends WC_Shipping_Method {
                 /**
                  * Constructor for your shipping class
                  *
@@ -34,12 +34,12 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
                 public function __construct() {
                     $this->id                 = 'free_shipping'; 
                     $this->method_title       = __( 'Free Shipping Options', 'free_shipping' );  
-                    $this->method_description = __( 'Custom Free Shipping Method for WooCommerce', 'free_shipping' ); 
+                    $this->method_description = __( 'Free Shipping for Individual Products for WooCommerce', 'free_shipping' ); 
  
                     $this->init();
  
                     $this->enabled = isset( $this->settings['enabled'] ) ? $this->settings['enabled'] : 'yes';
-                    $this->title = isset( $this->settings['title'] ) ? $this->settings['title'] : __( 'WooCommerce Free Shipping', 'free_shipping' );
+                    $this->title = isset( $this->settings['title'] ) ? $this->settings['title'] : __( 'WooCommerce Individual Product Free Shipping', 'free_shipping' );
                 }
  
                 /**
@@ -107,21 +107,21 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
         }
     }
  
-    add_action( 'woocommerce_shipping_init', 'woocommerce_free_shipping_method' );
+    add_action( 'woocommerce_shipping_init', 'woocommerce_individual_product_free_shipping_method' );
  
-    function add_woocommerce_free_shipping_method( $methods ) {
-        $methods['free_shipping'] = 'WooCommerce_Free_Shipping_Method';
+    function add_woocommerce_individual_product_free_shipping_method( $methods ) {
+        $methods['free_shipping'] = 'WooCommerce_Individual_Product_Free_Shipping_Method';
         return $methods;
     }
  
-    add_filter( 'woocommerce_shipping_methods', 'add_woocommerce_free_shipping_method' );
+    add_filter( 'woocommerce_shipping_methods', 'add_woocommerce_individual_product_free_shipping_method' );
 
 
 }
 
-add_filter( 'woocommerce_cart_shipping_packages', 'sort_items' );
+add_filter( 'woocommerce_cart_shipping_packages', 'sort_free_and_regular_products' );
 
-function sort_items( $packages ) {
+function sort_free_and_regular_products( $packages ) {
     // Reset the packages
     $packages = array();
   
