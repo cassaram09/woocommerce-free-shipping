@@ -9,12 +9,12 @@
  * Author URI: http://mattcassara.com
  * License: GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ * Text Domain: free-shipping
+ * Domain Path: /languages
  */
- 
+
 if ( ! defined( 'WPINC' ) ) {
- 
-    die;
- 
+  die;
 }
  
 /*
